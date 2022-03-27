@@ -22,4 +22,4 @@ jobs:
     
     - uses: azure/container-scan@v0.1
       with:
-        image-name: my-image:my-tag
+        image-name: ${{ env.image_name }}:${{ github.sha }}
