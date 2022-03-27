@@ -19,3 +19,7 @@ jobs:
     - name: Build an image from Dockerfile
       run: |
         docker build -t ${image_name}:${{ github.sha }} .
+    
+    - uses: azure/container-scan@v0.1
+      with:
+        image-name: my-image:my-tag
