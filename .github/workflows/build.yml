@@ -26,11 +26,41 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # TODO - Add lint testing commands.(optional) 
+      # stub holder for lint testing.
+      - name: Lint Test
+        run: |
+          echo "Hello Lint Testing!"
+
+      # TODO - Add lint testing commands.(optional) 
+      # stub holder for lint testing.
+      - name: Unit Test
+        run: |
+          echo "Hello Unit Testing!"
+
+      - name: SAST Scan
+        run: |
+          echo "Hello SAST security scanning!"
+
+      # TODO - Add as a pre check or separate action.
+      # Preferrably this only runs when the specific file/directory changes.
+      # Can use trivy to accomplish this.
+      - name: Dockerfile Scan
+        run: |
+          echo "Hello Dockerfile security scanning!"
+
+      # TODO - Add as a pre check or separate action.
+      # Preferrably this only runs when the specific file/directory changes.
+      # Can use trivy to accomplish this.
+      - name: K8s Object Scan
+        run: |
+          echo "Hello K8s object (manifest or helm) security scanning!"
+
       - name: Build an image from Dockerfile
         run: |
           docker build -t docker.io/my-organization/my-app:${{ github.sha }} .
 
-      - name: Run Trivy vulnerability scanner
+      - name: Trivy Container Scan
         uses: aquasecurity/trivy-action@0.2.2
         with:
           image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
@@ -40,6 +70,6 @@ jobs:
           severity: 'CRITICAL,HIGH'
 
       - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v1
+        uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: 'trivy-results.sarif'
