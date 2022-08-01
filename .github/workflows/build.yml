@@ -16,6 +16,36 @@ permissions:
   contents: read
 
 jobs:
+  pre-check:
+    permissions:
+      contents: read # for actions/checkout to fetch code
+      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
+    name: Pre-Check
+    runs-on: "ubuntu-18.04"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # TODO - Add lint testing commands.(optional) 
+      # stub holder for lint testing.
+      - name: Lint Test
+        run: |
+          echo "Hello Lint Testing!"
+
+      # TODO - Add as a pre check or separate action.
+      # Preferrably this only runs when the specific file/directory changes.
+      # Can use trivy to accomplish this.
+      - name: Dockerfile Scan
+        run: |
+          echo "Hello Dockerfile security scanning!"
+
+      # TODO - Add as a pre check or separate action.
+      # Preferrably this only runs when the specific file/directory changes.
+      # Can use trivy to accomplish this.
+      - name: K8s Object Scan
+        run: |
+          echo "Hello K8s object (manifest or helm) security scanning!"
+  
   build:
     permissions:
       contents: read # for actions/checkout to fetch code
