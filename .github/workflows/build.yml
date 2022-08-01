@@ -89,8 +89,31 @@ jobs:
     permissions:
       contents: read # for actions/checkout to fetch code
     name: Deploy Dev
+    environment: 'develop'
     runs-on: "ubuntu-18.04"
     needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # May or may not be required depending on application setup and usage.
+      - name: Get Secrets
+        run: |
+          echo "Grabbing secrets from secret store"
+
+      - name: Deploy with Helm
+        run: |
+          echo "Deploy with environment specific kubeconfig using helm package manager."
+  
+  # TODO - Template out deploys to just pass arguments for the workflow.
+  # TODO - Template workflow should assumed a QA,Stag,Prod flow when utilized.
+  deploy_qa:
+    permissions:
+      contents: read # for actions/checkout to fetch code
+    name: Deploy QA
+    environment: 'qa'
+    runs-on: "ubuntu-18.04"
+    needs: [build, deploy_dev]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
