@@ -107,6 +107,7 @@ jobs:
   
   # TODO - Template out deploys to just pass arguments for the workflow.
   # TODO - Template workflow should assumed a QA,Stag,Prod flow when utilized.
+  # Example of approval Gates - https://cloudlumberjack.com/posts/github-actions-approvals/
   deploy_qa:
     permissions:
       contents: read # for actions/checkout to fetch code
@@ -114,6 +115,52 @@ jobs:
     environment: 'qa'
     runs-on: "ubuntu-18.04"
     needs: [build, deploy_dev]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # May or may not be required depending on application setup and usage.
+      - name: Get Secrets
+        run: |
+          echo "Grabbing secrets from secret store"
+
+      - name: Deploy with Helm
+        run: |
+          echo "Deploy with environment specific kubeconfig using helm package manager."
+
+  # TODO - Template out deploys to just pass arguments for the workflow.
+  # TODO - Template workflow should assumed a QA,Stag,Prod flow when utilized.
+  # Example of approval Gates - https://cloudlumberjack.com/posts/github-actions-approvals/
+  deploy_stage:
+    permissions:
+      contents: read # for actions/checkout to fetch code
+    name: Deploy Stage
+    environment: 'stage'
+    runs-on: "ubuntu-18.04"
+    needs: [build, deploy_dev, deploy_qa]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # May or may not be required depending on application setup and usage.
+      - name: Get Secrets
+        run: |
+          echo "Grabbing secrets from secret store"
+
+      - name: Deploy with Helm
+        run: |
+          echo "Deploy with environment specific kubeconfig using helm package manager."
+
+  # TODO - Template out deploys to just pass arguments for the workflow.
+  # TODO - Template workflow should assumed a QA,Stag,Prod flow when utilized.
+  # Example of approval Gates - https://cloudlumberjack.com/posts/github-actions-approvals/
+  deploy_prod:
+    permissions:
+      contents: read # for actions/checkout to fetch code
+    name: Deploy Prod
+    environment: 'prod'
+    runs-on: "ubuntu-18.04"
+    needs: [build, deploy_dev, deploy_qa, deploy_stage]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
