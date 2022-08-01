@@ -102,7 +102,7 @@ jobs:
           format: 'github'
           output: 'dependency-results.sbom.json'
           image-ref: '.'
-          github-pat: env.myPAT
+          github-pat: ${{ env.myPAT }}
 
   deploy_dev:
     permissions:
