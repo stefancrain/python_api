@@ -158,7 +158,7 @@ jobs:
     permissions:
       contents: read # for actions/checkout to fetch code
     name: Deploy Prod - United States
-    environment: 'prod'
+    environment: 'prod-us'
     runs-on: "ubuntu-18.04"
     needs: [build, deploy_dev, deploy_qa, deploy_stage]
     steps:
@@ -178,7 +178,7 @@ jobs:
     permissions:
       contents: read # for actions/checkout to fetch code
     name: Deploy Prod - Europe
-    environment: 'prod'
+    environment: 'prod-eu'
     runs-on: "ubuntu-18.04"
     needs: [build, deploy_dev, deploy_qa, deploy_stage]
     steps:
@@ -198,7 +198,7 @@ jobs:
     permissions:
       contents: read # for actions/checkout to fetch code
     name: Deploy Prod - Australia
-    environment: 'prod'
+    environment: 'prod-au'
     runs-on: "ubuntu-18.04"
     needs: [build, deploy_dev, deploy_qa, deploy_stage]
     steps:
