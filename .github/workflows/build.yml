@@ -131,11 +131,57 @@ jobs:
   # TODO - Template out deploys to just pass arguments for the workflow.
   # TODO - Template workflow should assumed a QA,Stag,Prod flow when utilized.
   # Example of approval Gates - https://cloudlumberjack.com/posts/github-actions-approvals/
-  deploy_stage:
+  deploy_stage_us:
     permissions:
       contents: read # for actions/checkout to fetch code
-    name: Deploy Stage
-    environment: 'stage'
+    name: Deploy Stage - United States
+    environment: 'stage-us'
+    runs-on: "ubuntu-18.04"
+    needs: [build, deploy_dev, deploy_qa]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # May or may not be required depending on application setup and usage.
+      - name: Get Secrets
+        run: |
+          echo "Grabbing secrets from secret store"
+
+      - name: Deploy with Helm
+        run: |
+          echo "Deploy with environment specific kubeconfig using helm package manager."
+
+  # TODO - Template out deploys to just pass arguments for the workflow.
+  # TODO - Template workflow should assumed a QA,Stag,Prod flow when utilized.
+  # Example of approval Gates - https://cloudlumberjack.com/posts/github-actions-approvals/
+  deploy_stage_eu:
+    permissions:
+      contents: read # for actions/checkout to fetch code
+    name: Deploy Stage - Europe
+    environment: 'stage-eu'
+    runs-on: "ubuntu-18.04"
+    needs: [build, deploy_dev, deploy_qa]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # May or may not be required depending on application setup and usage.
+      - name: Get Secrets
+        run: |
+          echo "Grabbing secrets from secret store"
+
+      - name: Deploy with Helm
+        run: |
+          echo "Deploy with environment specific kubeconfig using helm package manager."
+
+  # TODO - Template out deploys to just pass arguments for the workflow.
+  # TODO - Template workflow should assumed a QA,Stag,Prod flow when utilized.
+  # Example of approval Gates - https://cloudlumberjack.com/posts/github-actions-approvals/
+  deploy_stage_au:
+    permissions:
+      contents: read # for actions/checkout to fetch code
+    name: Deploy Stage - Australia
+    environment: 'stage-au'
     runs-on: "ubuntu-18.04"
     needs: [build, deploy_dev, deploy_qa]
     steps:
@@ -160,7 +206,7 @@ jobs:
     name: Deploy Prod - United States
     environment: 'prod-us'
     runs-on: "ubuntu-18.04"
-    needs: [build, deploy_dev, deploy_qa, deploy_stage]
+    needs: [build, deploy_dev, deploy_qa, deploy_stage_us]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -180,7 +226,7 @@ jobs:
     name: Deploy Prod - Europe
     environment: 'prod-eu'
     runs-on: "ubuntu-18.04"
-    needs: [build, deploy_dev, deploy_qa, deploy_stage]
+    needs: [build, deploy_dev, deploy_qa, deploy_stage_eu]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -200,7 +246,7 @@ jobs:
     name: Deploy Prod - Australia
     environment: 'prod-au'
     runs-on: "ubuntu-18.04"
-    needs: [build, deploy_dev, deploy_qa, deploy_stage]
+    needs: [build, deploy_dev, deploy_qa, deploy_stage_au]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
