@@ -12,12 +12,26 @@ on:
 
 jobs:
   
+  deploy_qa:
+    name: QA
+    # strategy:
+    #       matrix:
+    #         myENV_NAME: ${{ fromJSON(inputs.myENV_NAME) }}
+    runs-on: ubuntu-latest
+    #environment: 'qa'
+    steps:
+      - name: qa deploy
+        run: |
+          echo "Hello QA!"
+
   deploy_stage:
     name: Stage
     strategy:
           matrix:
             myENV_NAME: ${{ fromJSON(inputs.myENV_NAME) }}
     runs-on: ubuntu-latest
+    #environment: 'stage-${{ matrix.myENV_NAME }}'
+    needs: deploy_qa
     steps:
       - name: stage-${{ matrix.myENV_NAME }}
         run: |
