@@ -13,12 +13,11 @@ on:
 jobs:
   docker:
     name: Docker Build, Scan, Push
-    #runs-on: "ubuntu-18.04"
+    runs-on: "ubuntu-18.04"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      
       - name: Build an image from Dockerfile
         run: |
           docker build -t docker.io/my-organization/my-app:${{ github.sha }} .
