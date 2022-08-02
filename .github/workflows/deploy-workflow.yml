@@ -19,10 +19,10 @@ jobs:
             myENV_NAME: ${{ fromJSON(inputs.myENV_NAME) }}
     runs-on: ubuntu-latest
     steps:
-      - name: stage-${{ fromJSON(matrix.myENV_NAME) }}
+      - name: stage-${{ matrix.myENV_NAME }}
         run: |
           echo "Hello Workflow!"
-          echo "Deploying to ${{ fromJSON(matrix.myENV_NAME) }}"
+          echo "Deploying to ${{ matrix.myENV_NAME }}"
 
   deploy_prod:
     name: Production
@@ -31,9 +31,9 @@ jobs:
             myENV_NAME: ${{ fromJSON(inputs.myENV_NAME) }}
     runs-on: ubuntu-latest
     needs: deploy_stage
-    #environment: 'stage-${{ fromJSON(matrix.myENV_NAME) }}'
+    #environment: 'stage-${{ matrix.myENV_NAME }}'
     steps:
-      - name: prod-${{ fromJSON(matrix.myENV_NAME) }}
+      - name: prod-${{ matrix.myENV_NAME }}
         run: |
           echo "Hello Workflow!"
-          echo "Deploying to ${{ fromJSON(matrix.myENV_NAME) }}"
+          echo "Deploying to ${{ matrix.myENV_NAME }}"
