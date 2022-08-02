@@ -17,8 +17,10 @@ permissions:
 
 jobs:
   # Test to call outside workflow
-  call-workflow-2-in-local-repo:
-    uses: ./workflow/deploy-workflow.yml
+  call-workflow:
+    uses: duffycb89/python_api/workflow/deploy-workflow.yml
+
+    #https://github.com/duffycb89/python_api/blob/84c9287239326d76e03a2604bb5bfb0b6034d1aa/workflow/deploy-workflow.yml
 
   pre-check:
     permissions:
