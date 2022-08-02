@@ -14,12 +14,16 @@ on:
 
 permissions:
   contents: read
+  security_events: write
 
 jobs:
 
   pre-check:
     name: Pre-Check
     uses: ./.github/workflows/precheck-workflow.yml
+    permissions:
+      contents: read
+      security_events: write
   
   build:
     permissions:
