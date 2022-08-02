@@ -21,6 +21,7 @@ on:
         type: string
 
 jobs:
+  
   deploy_stage:
     name: Pass input and secrets to my-action
     runs-on: ubuntu-latest
@@ -32,19 +33,7 @@ jobs:
         run: |
           echo "Hello Workflow!"
           echo "Deploying to ${{ fromJSON(inputs.myENV_NAME) }}"
-      
-      # - name: Checkout code
-      #   uses: actions/checkout@v2
 
-      # # May or may not be required depending on application setup and usage.
-      # - name: Get Secrets
-      #   run: |
-      #     echo "Grabbing secrets from secret store"
-
-      # - name: Deploy with Helm
-      #   run: |
-      #     echo "Deploy with environment specific kubeconfig using helm package manager."
-    
   deploy_prod:
     name: Pass input and secrets to my-action
     runs-on: ubuntu-latest
@@ -57,15 +46,3 @@ jobs:
         run: |
           echo "Hello Workflow!"
           echo "Deploying to ${{ fromJSON(inputs.myENV_NAME) }}"
-      
-      # - name: Checkout code
-      #   uses: actions/checkout@v2
-
-      # # May or may not be required depending on application setup and usage.
-      # - name: Get Secrets
-      #   run: |
-      #     echo "Grabbing secrets from secret store"
-
-      # - name: Deploy with Helm
-      #   run: |
-      #     echo "Deploy with environment specific kubeconfig using helm package manager."
