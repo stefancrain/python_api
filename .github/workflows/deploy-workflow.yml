@@ -24,6 +24,9 @@ jobs:
   example_job:
     name: Pass input and secrets to my-action
     runs-on: ubuntu-latest
+    strategy:
+          matrix:
+            runs-on: ${{ fromJSON(inputs.myENV_NAME) }}
     steps:
       - name: Test Flow
         # with:
