@@ -17,10 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
           matrix:
-            name: stage-${{ fromJSON(inputs.myENV_NAME) }}
             runs-on: ${{ fromJSON(inputs.myENV_NAME) }}
     steps:
-      - name: Test Flow
+      - name: stage-${{ fromJSON(inputs.myENV_NAME) }}
         run: |
           echo "Hello Workflow!"
           echo "Deploying to ${{ fromJSON(inputs.myENV_NAME) }}"
@@ -31,10 +30,9 @@ jobs:
     needs: deploy_stage
     strategy:
           matrix:
-            name: prod-${{ fromJSON(inputs.myENV_NAME) }}
             runs-on: ${{ fromJSON(inputs.myENV_NAME) }}
     steps:
-      - name: Test Flow
+      - name: prod-${{ fromJSON(inputs.myENV_NAME) }}
         run: |
           echo "Hello Workflow!"
           echo "Deploying to ${{ fromJSON(inputs.myENV_NAME) }}"
