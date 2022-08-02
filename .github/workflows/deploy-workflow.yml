@@ -1,24 +1,31 @@
 # Looks like reusable workflows must reside in the .github/workflows folder to be usable.
 # Example discussion - https://github.com/actions/runner/issues/1493
-name: Reusable workflow example
+name: Deployment - Common Progression
 
 on: 
   workflow_call:
     inputs:
       myENV_NAME:
-        description: Environment to deploy to. Example, stage-us.
+        description: Regions we will be deploying to.
         required: true
         type: string
 
 jobs:
   
+  deploy_dev:
+    name: Development
+    runs-on: ubuntu-latest
+    environment: 'dev'
+    steps:
+      - name: dev deploy
+        run: |
+          echo "Hello Developers!"
+
   deploy_qa:
     name: QA
-    # strategy:
-    #       matrix:
-    #         myENV_NAME: ${{ fromJSON(inputs.myENV_NAME) }}
     runs-on: ubuntu-latest
-    #environment: 'qa'
+    environment: 'qa'
+    needs: deploy_dev
     steps:
       - name: qa deploy
         run: |
