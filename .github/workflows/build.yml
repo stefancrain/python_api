@@ -16,6 +16,10 @@ permissions:
   contents: read
 
 jobs:
+  # Test to call outside workflow
+  call-workflow-2-in-local-repo:
+    uses: ./workflow/deploy-workflow.yml
+
   pre-check:
     permissions:
       contents: read # for actions/checkout to fetch code
