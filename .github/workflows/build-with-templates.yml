@@ -14,7 +14,7 @@ on:
 
 permissions:
   contents: read
-  security_events: write
+  security-events: write
 
 jobs:
 
@@ -23,7 +23,7 @@ jobs:
     uses: ./.github/workflows/precheck-workflow.yml
     permissions:
       contents: read
-      security_events: write
+      security-events: write
   
   build:
     permissions:
