@@ -17,13 +17,18 @@ permissions:
 
 jobs:
   # Test to call outside workflow
-  call-workflow:
-    name: Deploy Workflow
+  stage-workflow:
+    name: Production Deploy Workflow
     uses: ./.github/workflows/deploy-workflow.yml
     with:
       myENV_NAME: '["stage-us", "stage-eu", "stage-au"]'
-
-    #https://github.com/duffycb89/python_api/blob/84c9287239326d76e03a2604bb5bfb0b6034d1aa/workflow/deploy-workflow.yml
+  
+  prod-workflow:
+    name: Production Deploy Workflow
+    uses: ./.github/workflows/deploy-workflow.yml
+    needs: stage-workflow
+    with:
+      myENV_NAME: '["prod-us", "prod-eu", "prod-au"]'
 
   pre-check:
     permissions:
