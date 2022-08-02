@@ -1,3 +1,5 @@
+# Looks like reusable workflows must reside in the .github/workflows folder to be usable.
+# Example discussion - https://github.com/actions/runner/issues/1493
 name: Reusable workflow example
 
 # on:
@@ -9,6 +11,10 @@ name: Reusable workflow example
 #     secrets:
 #       token:
 #         required: true
+
+on: 
+  workflow_call:
+    
 
 jobs:
   example_job:
