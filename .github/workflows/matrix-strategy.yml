@@ -1,0 +1,34 @@
+on:
+  workflow_run:
+    workflows: [build]
+    types: [completed]
+
+jobs:
+  on-success:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - run: echo 'The triggering workflow passed'
+  on-failure:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    strategy:
+      matrix:
+        include:
+          - site: "production"
+            datacenter: "site-a"
+          - site: "staging"
+            datacenter: "site-b"
+    steps:
+      - run: echo 'The triggering workflow failed'
+
+# jobs:
+#   includes_only:
+#     runs-on: ubuntu-latest
+#     strategy:
+#       matrix:
+#         include:
+#           - site: "production"
+#             datacenter: "site-a"
+#           - site: "staging"
+#             datacenter: "site-b"
