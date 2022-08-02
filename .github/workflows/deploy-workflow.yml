@@ -21,7 +21,7 @@ jobs:
     name: Pass input and secrets to my-action
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/workflows/my-action
+      - name: Test Flow
         # with:
         #   username: ${{ inputs.username }}
         #   token: ${{ secrets.token }}
