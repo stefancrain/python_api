@@ -31,7 +31,7 @@ jobs:
             myENV_NAME: ${{ fromJSON(inputs.myENV_NAME) }}
     runs-on: ubuntu-latest
     needs: deploy_stage
-    environment: 'stage-${{ matrix.myENV_NAME }}'
+    environment: 'prod-${{ matrix.myENV_NAME }}'
     steps:
       - name: prod-${{ matrix.myENV_NAME }}
         run: |
