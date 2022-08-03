@@ -25,20 +25,6 @@ jobs:
       contents: read
       security-events: write
 
-  docker-build:
-    name: Docker Build, Scan, Push
-    uses: ./.github/workflows/docker-workflow.yml
-    permissions:
-      contents: read
-      security-events: write
-
-      # TODO - Add parameters for docker values such as image name and tag.
-      # - name: Docker
-      #   uses: ./.github/workflows/docker-workflow.yml
-      #   permissions:
-      #     contents: read
-      #     security-events: write
-  
   build:
     permissions:
       contents: read # for actions/checkout to fetch code
@@ -59,22 +45,46 @@ jobs:
       - name: SAST Scan
         run: |
           echo "Hello SAST security scanning!"
-      
-      - name: Run Trivy in GitHub SBOM mode and submit results to Dependency Snapshots
-        uses: aquasecurity/trivy-action@master
-        # Pull PAT token from Github actions secrets.
-        env:
-          myPAT: ${{ secrets.GH_SEC_PAT }}
-        with:
-          scan-type: 'fs'
-          format: 'github'
-          output: 'dependency-results.sbom.json'
-          image-ref: '.'
-          github-pat: ${{ env.myPAT }}
 
-  deployments:
-    name: Deployment
+  docker-build:
+    name: Docker Build, Scan, Push
+    uses: ./.github/workflows/docker-workflow.yml
     needs: build
+    permissions:
+      contents: read
+      security-events: write
+
+      # TODO - Add parameters for docker values such as image name and tag.
+      # - name: Docker
+      #   uses: ./.github/workflows/docker-workflow.yml
+      #   permissions:
+      #     contents: read
+      #     security-events: write
+
+  deployments-lowers:
+    name: Deployment
+    needs: [pre-check, build, docker-build]
+    uses: ./.github/workflows/deploy-lower-workflow.yml
+    # with:
+    #   myENV_NAME: '["us", "eu", "au"]'
+
+  deployments-uppers-us:
+    name: Deployment
+    needs: [deployments-lowers]
     uses: ./.github/workflows/deploy-workflow.yml
     with:
-      myENV_NAME: '["us", "eu", "au"]'
+      myENV_NAME: "us"
+  
+  deployments-uppers-eu:
+    name: Deployment
+    needs: [deployments-lowers]
+    uses: ./.github/workflows/deploy-workflow.yml
+    with:
+      myENV_NAME: "eu"
+
+  deployments-uppers-au:
+    name: Deployment
+    needs: [deployments-lowers]
+    uses: ./.github/workflows/deploy-workflow.yml
+    with:
+      myENV_NAME: "au"

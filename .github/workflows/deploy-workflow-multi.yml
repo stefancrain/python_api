@@ -12,24 +12,24 @@ on:
 
 jobs:
   
-  deploy_dev:
-    name: Development
-    runs-on: ubuntu-latest
-    environment: 'dev'
-    steps:
-      - name: dev deploy
-        run: |
-          echo "Hello Developers!"
+  # deploy_dev:
+  #   name: Development
+  #   runs-on: ubuntu-latest
+  #   environment: 'dev'
+  #   steps:
+  #     - name: dev deploy
+  #       run: |
+  #         echo "Hello Developers!"
 
-  deploy_qa:
-    name: QA
-    runs-on: ubuntu-latest
-    environment: 'qa'
-    needs: deploy_dev
-    steps:
-      - name: qa deploy
-        run: |
-          echo "Hello QA!"
+  # deploy_qa:
+  #   name: QA
+  #   runs-on: ubuntu-latest
+  #   environment: 'qa'
+  #   needs: deploy_dev
+  #   steps:
+  #     - name: qa deploy
+  #       run: |
+  #         echo "Hello QA!"
 
   deploy_stage:
     strategy:
