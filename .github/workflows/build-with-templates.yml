@@ -69,21 +69,21 @@ jobs:
     #   myENV_NAME: '["us", "eu", "au"]'
 
   deployments-uppers-us:
-    name: Deployment
+    name: Deployment US
     needs: [deployments-lowers]
     uses: ./.github/workflows/deploy-upper-workflow.yml
     with:
       myENV_NAME: "us"
   
   deployments-uppers-eu:
-    name: Deployment
+    name: Deployment EU
     needs: [deployments-lowers]
     uses: ./.github/workflows/deploy-upper-workflow.yml
     with:
       myENV_NAME: "eu"
 
   deployments-uppers-au:
-    name: Deployment
+    name: Deployment AU
     needs: [deployments-lowers]
     uses: ./.github/workflows/deploy-upper-workflow.yml
     with:
