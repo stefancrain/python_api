@@ -24,6 +24,20 @@ jobs:
     permissions:
       contents: read
       security-events: write
+
+  docker-build:
+    name: Docker Build, Scan, Push
+    uses: ./.github/workflows/docker-workflow.yml
+    permissions:
+      contents: read
+      security-events: write
+
+      # TODO - Add parameters for docker values such as image name and tag.
+      # - name: Docker
+      #   uses: ./.github/workflows/docker-workflow.yml
+      #   permissions:
+      #     contents: read
+      #     security-events: write
   
   build:
     permissions:
@@ -45,13 +59,6 @@ jobs:
       - name: SAST Scan
         run: |
           echo "Hello SAST security scanning!"
-
-      # TODO - Add parameters for docker values such as image name and tag.
-      - name: Docker
-        uses: ./.github/workflows/docker-workflow.yml
-        permissions:
-          contents: read
-          security-events: write
       
       - name: Run Trivy in GitHub SBOM mode and submit results to Dependency Snapshots
         uses: aquasecurity/trivy-action@master
