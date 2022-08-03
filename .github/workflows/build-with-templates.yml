@@ -49,6 +49,9 @@ jobs:
       # TODO - Add parameters for docker values such as image name and tag.
       - name: Docker
         uses: ./.github/workflows/docker-workflow.yml
+        permissions:
+          contents: read
+          security-events: write
       
       - name: Run Trivy in GitHub SBOM mode and submit results to Dependency Snapshots
         uses: aquasecurity/trivy-action@master
