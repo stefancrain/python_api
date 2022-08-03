@@ -32,23 +32,23 @@ jobs:
   #         echo "Hello QA!"
 
   deploy_stage:
-    name: 'stage-${{ input.myENV_NAME }}'
+    name: 'stage-${{ github.event.inputs.myENV_NAME }}'
     runs-on: ubuntu-latest
-    environment: 'stage-${{ input.myENV_NAME }}'
+    environment: 'stage-${{ github.event.inputs.myENV_NAME }}'
     #needs: deploy_qa
     steps:
-      - name: stage-${{ input.myENV_NAME }}
+      - name: stage-${{ github.event.inputs.myENV_NAME }}
         run: |
           echo "Hello Workflow!"
-          echo "Deploying to ${{ input.myENV_NAME }}"
+          echo "Deploying to ${{ github.event.inputs.myENV_NAME }}"
 
   deploy_prod:
     runs-on: ubuntu-latest
-    name: 'prod-${{ input.myENV_NAME }}'
+    name: 'prod-${{ github.event.inputs.myENV_NAME }}'
     needs: 'deploy_stage'
-    environment: 'prod-${{ input.myENV_NAME }}'
+    environment: 'prod-${{ github.event.inputs.myENV_NAME }}'
     steps:
-      - name: prod-${{ input.myENV_NAME }}
+      - name: prod-${{ github.event.inputs.myENV_NAME }}
         run: |
           echo "Hello Workflow!"
-          echo "Deploying to ${{ input.myENV_NAME }}"
+          echo "Deploying to ${{ github.event.inputs.myENV_NAME }}"
