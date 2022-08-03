@@ -71,20 +71,20 @@ jobs:
   deployments-uppers-us:
     name: Deployment
     needs: [deployments-lowers]
-    uses: ./.github/workflows/deploy-workflow.yml
+    uses: ./.github/workflows/deploy-upper-workflow.yml
     with:
       myENV_NAME: "us"
   
   deployments-uppers-eu:
     name: Deployment
     needs: [deployments-lowers]
-    uses: ./.github/workflows/deploy-workflow.yml
+    uses: ./.github/workflows/deploy-upper-workflow.yml
     with:
       myENV_NAME: "eu"
 
   deployments-uppers-au:
     name: Deployment
     needs: [deployments-lowers]
-    uses: ./.github/workflows/deploy-workflow.yml
+    uses: ./.github/workflows/deploy-upper-workflow.yml
     with:
       myENV_NAME: "au"
