@@ -3,14 +3,14 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Build With Templates
+name: Common Monolith CI Pipeline
 
 on:
   push:
-    branches: [ test-deploy ]
+    branches: [ main ]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ test-deploy ]
+    branches: [ main ]
 
 permissions:
   contents: read

@@ -2,7 +2,7 @@ name: Deployments
 
 on:
   push:
-    branches: [ main ]
+    branches: [ testABC ]
 
 permissions:
   contents: read

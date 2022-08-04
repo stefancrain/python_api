@@ -2,7 +2,7 @@ name: Matrix Strategy - Deploys
 
 on:
   push:
-    branches: [ main ]
+    branches: [ testABC ]
   # workflow_run:
   #   workflows: [build]
   #   types: [completed]
