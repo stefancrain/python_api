@@ -1,6 +1,6 @@
 # Looks like reusable workflows must reside in the .github/workflows folder to be usable.
 # Example discussion - https://github.com/actions/runner/issues/1493
-name: Deployment - Common Progression
+name: Template - Deployment - Common Progression
 
 on: 
   workflow_call:
