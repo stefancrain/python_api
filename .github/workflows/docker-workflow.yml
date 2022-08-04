@@ -1,0 +1,41 @@
+# Looks like reusable workflows must reside in the .github/workflows folder to be usable.
+# Example discussion - https://github.com/actions/runner/issues/1493
+name: Docker Build, Scan, Push
+
+on: 
+  workflow_call:
+    inputs:
+      myENV_NAME:
+        description: Regions we will be deploying to.
+        type: string
+        #required: true
+
+jobs:
+  docker:
+    name: Docker Build, Scan, Push
+    runs-on: "ubuntu-18.04"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build an image from Dockerfile
+        run: |
+          docker build -t docker.io/my-organization/my-app:${{ github.sha }} .
+
+      - name: Trivy Container Scan
+        uses: aquasecurity/trivy-action@0.2.2
+        with:
+          image-ref: 'docker.io/my-organization/my-app:${{ github.sha }}'
+          format: 'template'
+          template: '@/contrib/sarif.tpl'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
+      
+      - name: Push Container image
+        run: |
+          echo "----- Pushing image to private registry -----"
