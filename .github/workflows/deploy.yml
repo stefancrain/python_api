@@ -1,0 +1,23 @@
+name: Deployments
+
+on:
+  push:
+    branches: [ testABC ]
+
+permissions:
+  contents: read
+
+jobs:
+  # Test to call outside workflow
+  deployments:
+    name: Deployment
+    uses: ./.github/workflows/deploy-workflow.yml
+    with:
+      myENV_NAME: '["us", "eu", "au"]'
+  
+  # prod-workflow:
+  #   name: Production Deploy Workflow
+  #   uses: ./.github/workflows/deploy-workflow.yml
+  #   needs: stage-workflow
+  #   with:
+  #     myENV_NAME: '["prod-us", "prod-eu", "prod-au"]'

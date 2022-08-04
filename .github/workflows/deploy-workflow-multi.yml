@@ -1,0 +1,60 @@
+# Looks like reusable workflows must reside in the .github/workflows folder to be usable.
+# Example discussion - https://github.com/actions/runner/issues/1493
+name: Deployment - Common Progression
+
+on: 
+  workflow_call:
+    inputs:
+      myENV_NAME:
+        description: Regions we will be deploying to.
+        required: true
+        type: string
+
+jobs:
+  
+  # deploy_dev:
+  #   name: Development
+  #   runs-on: ubuntu-latest
+  #   environment: 'dev'
+  #   steps:
+  #     - name: dev deploy
+  #       run: |
+  #         echo "Hello Developers!"
+
+  # deploy_qa:
+  #   name: QA
+  #   runs-on: ubuntu-latest
+  #   environment: 'qa'
+  #   needs: deploy_dev
+  #   steps:
+  #     - name: qa deploy
+  #       run: |
+  #         echo "Hello QA!"
+
+  deploy_stage:
+    strategy:
+          matrix:
+            myENV_NAME: ${{ fromJSON(inputs.myENV_NAME) }}
+    name: 'stage-${{ matrix.myENV_NAME }}'
+    runs-on: ubuntu-latest
+    environment: 'stage-${{ matrix.myENV_NAME }}'
+    needs: deploy_qa
+    steps:
+      - name: stage-${{ matrix.myENV_NAME }}
+        run: |
+          echo "Hello Workflow!"
+          echo "Deploying to ${{ matrix.myENV_NAME }}"
+
+  deploy_prod:
+    strategy:
+          matrix:
+            myENV_NAME: ${{ fromJSON(inputs.myENV_NAME) }}
+    runs-on: ubuntu-latest
+    name: 'prod-${{ matrix.myENV_NAME }}'
+    needs: 'deploy_stage'
+    environment: 'prod-${{ matrix.myENV_NAME }}'
+    steps:
+      - name: prod-${{ matrix.myENV_NAME }}
+        run: |
+          echo "Hello Workflow!"
+          echo "Deploying to ${{ matrix.myENV_NAME }}"

@@ -1,0 +1,90 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Common Monolith CI Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ main ]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+
+  pre-check:
+    name: Pre-Check
+    uses: ./.github/workflows/precheck-workflow.yml
+    permissions:
+      contents: read
+      security-events: write
+
+  build:
+    permissions:
+      contents: read # for actions/checkout to fetch code
+      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
+    name: Build
+    runs-on: "ubuntu-18.04"
+    needs: pre-check
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # TODO - Add lint testing commands.(optional) 
+      # stub holder for lint testing.
+      - name: Unit Test
+        run: |
+          echo "Hello Unit Testing!"
+
+      - name: SAST Scan
+        run: |
+          echo "Hello SAST security scanning!"
+
+  docker-build:
+    name: Docker Build, Scan, Push
+    uses: ./.github/workflows/docker-workflow.yml
+    needs: build
+    permissions:
+      contents: read
+      security-events: write
+
+      # TODO - Add parameters for docker values such as image name and tag.
+      # - name: Docker
+      #   uses: ./.github/workflows/docker-workflow.yml
+      #   permissions:
+      #     contents: read
+      #     security-events: write
+
+  deployments-lowers:
+    name: Deployment
+    needs: [pre-check, build, docker-build]
+    uses: ./.github/workflows/deploy-lower-workflow.yml
+    # with:
+    #   myENV_NAME: '["us", "eu", "au"]'
+
+  deployments-uppers-us:
+    name: Deployment US
+    needs: [deployments-lowers]
+    uses: ./.github/workflows/deploy-upper-workflow.yml
+    with:
+      myENV_NAME: "us"
+  
+  deployments-uppers-eu:
+    name: Deployment EU
+    needs: [deployments-lowers]
+    uses: ./.github/workflows/deploy-upper-workflow.yml
+    with:
+      myENV_NAME: "eu"
+
+  deployments-uppers-au:
+    name: Deployment AU
+    needs: [deployments-lowers]
+    uses: ./.github/workflows/deploy-upper-workflow.yml
+    with:
+      myENV_NAME: "au"

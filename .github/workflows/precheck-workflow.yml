@@ -1,0 +1,77 @@
+# Looks like reusable workflows must reside in the .github/workflows folder to be usable.
+# Example discussion - https://github.com/actions/runner/issues/1493
+name: PreCheck - Common Template
+
+on: 
+  workflow_call:
+    inputs:
+      myENV_NAME:
+        description: Regions we will be deploying to.
+        type: string
+        #required: true
+
+jobs:
+  pre-check:
+    permissions:
+      contents: read # for actions/checkout to fetch code
+      security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
+    name: Pre-Check
+    runs-on: "ubuntu-18.04"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # TODO - Add lint testing commands.(optional) 
+      # stub holder for lint testing.
+      - name: Lint Test
+        run: |
+          echo "Hello Lint Testing!"
+
+      # TODO - Add trivy scan for file system.
+      - name: Secret Scan
+        run: |
+          echo "Hello Secret security scanning!"
+          echo "Using Trivy to scan the filesystem to ensure passwords, tokens, certificates, etc are not present."
+
+      # TODO - Add as a pre check or separate action.
+      # Preferrably this only runs when the specific file/directory changes.
+      # Can use trivy to accomplish this.
+      - name: Dockerfile Scan
+        run: |
+          echo "Hello Dockerfile security scanning!"
+          echo "Using Trivy to scan Dockerfile"
+
+      # TODO - Add as a pre check or separate action.
+      # Preferrably this only runs when the specific file/directory changes.
+      # Can use trivy to accomplish this.
+      - name: K8s Object Scan
+        run: |
+          echo "Hello K8s object (manifest or helm) security scanning!"
+      
+      # Run Trivy in GitHub SBOM mode and submit results to Dependency Snapshots
+      - name: SBOM Scan / Report
+        uses: aquasecurity/trivy-action@master
+        # Pull PAT token from Github actions secrets.
+        env:
+          myPAT: ${{ secrets.GH_SEC_PAT }}
+        with:
+          scan-type: 'fs'
+          format: 'github'
+          output: 'dependency-results.sbom.json'
+          image-ref: '.'
+          github-pat: ${{ env.myPAT }}
+  
+  
+  # deploy_prod:
+  #   strategy:
+  #         matrix:
+  #           myENV_NAME: ${{ fromJSON(inputs.myENV_NAME) }}
+  #   runs-on: ubuntu-latest
+  #   name: 'prod-${{ matrix.myENV_NAME }}'
+  #   needs: 'deploy_stage'
+  #   environment: 'prod-${{ matrix.myENV_NAME }}'
+  #   steps:
+  #     - name: prod-${{ matrix.myENV_NAME }}
+  #       run: |
+  #         echo "Hello Workflow!"
+  #         echo "Deploying to ${{ matrix.myENV_NAME }}"
