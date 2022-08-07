@@ -7,11 +7,13 @@ name: Deployments
 
 on:
   workflow_run:
-    workflows: ["Build"]
-    types: [completed]
+    workflows: [Build]
+    types: 
+      - completed
     branches:
       - 'releases/**'
       - '!releases/**-alpha'
+      - 'main'
 # on:
 #   push:
 #     branches: [ main ]
