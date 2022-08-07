@@ -1,4 +1,7 @@
-[![Deployments](https://github.com/duffycb89/python_api/actions/workflows/deploy.yml/badge.svg)](https://github.com/duffycb89/python_api/actions/workflows/deploy.yml)
+[![Build](https://github.com/duffycb89/python_api/actions/workflows/build.yml/badge.svg)](https://github.com/duffycb89/python_api/actions/workflows/build.yml)
+[![Deployments](https://github.com/duffycb89/python_api/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/duffycb89/python_api/actions/workflows/deploy.yml)
+
+
 
 [![HitCount](https://hits.dwyl.com/duffycb89/python_api.svg?style=flat-square&show=unique)](http://hits.dwyl.com/duffycb89/python_api)
 
