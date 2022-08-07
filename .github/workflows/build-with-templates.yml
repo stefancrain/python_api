@@ -50,7 +50,7 @@ jobs:
 
   docker-build:
     name: Docker Build, Scan, Push
-    uses: ./.github/workflows/docker-workflow.yml
+    uses: duffycb89/template-workflows/.github/workflows/docker-workflow.yml@main
     needs: build
     permissions:
       contents: read
@@ -66,27 +66,27 @@ jobs:
   deployments-lowers:
     name: Deployment
     needs: [pre-check, build, docker-build]
-    uses: ./.github/workflows/deploy-lower-workflow.yml
+    uses: duffycb89/template-workflows/.github/workflows/deploy-lower-workflow.yml@main
     # with:
     #   myENV_NAME: '["us", "eu", "au"]'
 
   deployments-uppers-us:
     name: Deployment US
     needs: [deployments-lowers]
-    uses: ./.github/workflows/deploy-upper-workflow.yml
+    uses: duffycb89/template-workflows/.github/workflows/deploy-upper-workflow.yml@main
     with:
       myENV_NAME: "us"
   
   deployments-uppers-eu:
     name: Deployment EU
     needs: [deployments-lowers]
-    uses: ./.github/workflows/deploy-upper-workflow.yml
+    uses: duffycb89/template-workflows/.github/workflows/deploy-upper-workflow.yml@main
     with:
       myENV_NAME: "eu"
 
   deployments-uppers-au:
     name: Deployment AU
     needs: [deployments-lowers]
-    uses: ./.github/workflows/deploy-upper-workflow.yml
+    uses: duffycb89/template-workflows/.github/workflows/deploy-upper-workflow.yml@main
     with:
       myENV_NAME: "au"
