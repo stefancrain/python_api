@@ -1,0 +1,47 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Common Monolith CI Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ main ]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+
+  deployments-lowers:
+    name: Deployment
+    needs: [pre-check, build, docker-build]
+    uses: duffycb89/template-workflows/.github/workflows/deploy-lower-workflow.yml@main
+    # with:
+    #   myENV_NAME: '["us", "eu", "au"]'
+
+  deployments-uppers-us:
+    name: Deployment US
+    needs: [deployments-lowers]
+    uses: duffycb89/template-workflows/.github/workflows/deploy-upper-workflow.yml@main
+    with:
+      myENV_NAME: "us"
+  
+  deployments-uppers-eu:
+    name: Deployment EU
+    needs: [deployments-lowers]
+    uses: duffycb89/template-workflows/.github/workflows/deploy-upper-workflow.yml@main
+    with:
+      myENV_NAME: "eu"
+
+  deployments-uppers-au:
+    name: Deployment AU
+    needs: [deployments-lowers]
+    uses: duffycb89/template-workflows/.github/workflows/deploy-upper-workflow.yml@main
+    with:
+      myENV_NAME: "au"
