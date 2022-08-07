@@ -3,14 +3,14 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Common Monolith CI Pipeline
+name: Build
 
 on:
   push:
-    branches: [ test123 ]
+    branches: [ main ]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ test123 ]
+    branches: [ main ]
 
 permissions:
   contents: read
@@ -63,30 +63,4 @@ jobs:
       #     contents: read
       #     security-events: write
 
-  deployments-lowers:
-    name: Deployment
-    needs: [pre-check, build, docker-build]
-    uses: duffycb89/template-workflows/.github/workflows/deploy-lower-workflow.yml@main
-    # with:
-    #   myENV_NAME: '["us", "eu", "au"]'
-
-  deployments-uppers-us:
-    name: Deployment US
-    needs: [deployments-lowers]
-    uses: duffycb89/template-workflows/.github/workflows/deploy-upper-workflow.yml@main
-    with:
-      myENV_NAME: "us"
-  
-  deployments-uppers-eu:
-    name: Deployment EU
-    needs: [deployments-lowers]
-    uses: duffycb89/template-workflows/.github/workflows/deploy-upper-workflow.yml@main
-    with:
-      myENV_NAME: "eu"
-
-  deployments-uppers-au:
-    name: Deployment AU
-    needs: [deployments-lowers]
-    uses: duffycb89/template-workflows/.github/workflows/deploy-upper-workflow.yml@main
-    with:
-      myENV_NAME: "au"
+    # Deploys should trigger off of a successful completion.

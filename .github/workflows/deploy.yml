@@ -3,14 +3,21 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Common Monolith CI Pipeline
+name: Deployments
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [ main ]
+  workflow_run:
+    workflows: ["Build"]
+    types: [completed]
+    branches:
+      - 'releases/**'
+      - '!releases/**-alpha'
+# on:
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     # The branches below must be a subset of the branches above
+#     branches: [ main ]
 
 permissions:
   contents: read
@@ -20,7 +27,7 @@ jobs:
 
   deployments-lowers:
     name: Deployment
-    needs: [pre-check, build, docker-build]
+    #needs: [pre-check, build, docker-build]
     uses: duffycb89/template-workflows/.github/workflows/deploy-lower-workflow.yml@main
     # with:
     #   myENV_NAME: '["us", "eu", "au"]'
