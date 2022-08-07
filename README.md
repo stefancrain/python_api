@@ -1,7 +1,7 @@
 [![Deployments](https://github.com/duffycb89/python_api/actions/workflows/deploy.yml/badge.svg)](https://github.com/duffycb89/python_api/actions/workflows/deploy.yml)
 
 [![HitCount](https://hits.dwyl.com/duffycb89/python_api.svg?style=flat-square&show=unique)](http://hits.dwyl.com/duffycb89/python_api)
-
+[![Vulnerabilities](https://github.com/duffycb89/python_api/security/code-scanning/badge.svg)](https://github.com/duffycb89/python_api/security/code-scanning)
 # python_api
 Sample API test for CI/CD and Container Security testing.
 
