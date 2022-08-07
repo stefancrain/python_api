@@ -2,6 +2,14 @@
 
 [![HitCount](https://hits.dwyl.com/duffycb89/python_api.svg?style=flat-square&show=unique)](http://hits.dwyl.com/duffycb89/python_api)
 [![Vulnerabilities](https://github.com/duffycb89/python_api/security/code-scanning/badge.svg)](https://github.com/duffycb89/python_api/security/code-scanning)
+
+![Your Repository's Stats](https://github-readme-stats.vercel.app/api?username=duffycb89&show_icons=true)
+
+
+
+## Random joke for the day
+![Jokes Card](https://readme-jokes.vercel.app/api)
+
 # python_api
 Sample API test for CI/CD and Container Security testing.
 
