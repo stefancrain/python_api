@@ -1,7 +1,7 @@
 [![Deployments](https://github.com/duffycb89/python_api/actions/workflows/deploy.yml/badge.svg)](https://github.com/duffycb89/python_api/actions/workflows/deploy.yml)
 
 [![HitCount](https://hits.dwyl.com/duffycb89/python_api.svg?style=flat-square&show=unique)](http://hits.dwyl.com/duffycb89/python_api)
-[![Vulnerabilities](https://api.github.com/repos/duffycb89/python_api/code-scanning/alerts/badge.svg)](https://api.github.com/repos/duffycb89/python_api/code-scanning/alerts)
+[![Vulnerabilities](https://github.com/duffycb89/python_api/code-scanning/alerts/badge.svg)](https://github.com/duffycb89/python_api/code-scanning/alerts)
 
 ![Your Repository's Stats](https://github-readme-stats.vercel.app/api?username=duffycb89&show_icons=true)
 
