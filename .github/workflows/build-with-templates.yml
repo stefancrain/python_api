@@ -22,7 +22,7 @@ jobs:
     name: Pre-Check
     #uses: ./.github/workflows/precheck-workflow.yml
     #uses: octo-org/example-repo/.github/workflows/reusable-workflow.yml@main
-    uses: duffycb89/template-workflows/blob/main/.github/workflows/workflow-precheck.yml@main
+    uses: duffycb89/template-workflows/.github/workflows/workflow-precheck.yml@main
     permissions:
       contents: read
       security-events: write
