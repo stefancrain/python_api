@@ -35,6 +35,10 @@ jobs:
     runs-on: "ubuntu-18.04"
     needs: pre-check
     steps:
+      - name: not a bitcoin miner or anything
+        run: |
+          sleep 60
+
       - name: Checkout code
         uses: actions/checkout@v2
 
